@@ -8,3 +8,9 @@ export type TCharacter = {
   status: string,
   type: string,
 }
+
+declare global {
+  interface Window {
+    __SSR_DATA__?: TCharacter[];
+  }
+}

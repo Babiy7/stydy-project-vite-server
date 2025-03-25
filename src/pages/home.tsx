@@ -1,16 +1,28 @@
+import { useNavigate } from 'react-router-dom';
 import {TCharacter} from "../types.ts";
+import {JSX} from "react";
 
 interface HomePageProps {
-  characters: TCharacter[],
+  characters: TCharacter[]|undefined,
 }
 
-const Home = ({ characters }: HomePageProps) => {
+const Home = ({ characters }: HomePageProps): JSX.Element => {
+  const navigate = useNavigate();
+
+  if (!characters) {
+    return <div>Loading...</div>;
+  };
+
   return (
     <div className='container'>
       <h1>Rick and Morty Characters</h1>
       <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
         {characters?.map((character) => (
-          <li style={{ border: 'red 1px solid', margin: '16px' }} key={character.id}>
+          <li
+            onClick={() => navigate(`/character/${character.id}`)}
+            style={{ border: 'red 1px solid', margin: '16px' }}
+            key={character.id}
+          >
             <img height={300} width={270} src={character.image} alt={character.name} />
             <div>
               <h2>{character.name}</h2>
